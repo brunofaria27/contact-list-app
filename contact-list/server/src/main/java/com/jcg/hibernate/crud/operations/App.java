@@ -29,9 +29,9 @@ public class App {
       post(Utils.CONTACT_PATH, (req, res) -> {
         final var id = UUID.randomUUID().toString();
 
-        final var name = req.queryParams("name");
-        final var address = req.queryParams("address");
-        final var phoneNumber = req.queryParams("phoneNumber");
+        final var name = req.queryParams("nome");
+        final var address = req.queryParams("endereco");
+        final var phoneNumber = req.queryParams("telefone");
 
         DbOperations.create(Contact.builder()
             .id(id)
@@ -46,9 +46,9 @@ public class App {
       patch(String.format("%s/:id", Utils.CONTACT_PATH), (req, res) -> {
         final var id = req.params("id");
 
-        final var name = req.queryParams("name");
-        final var address = req.queryParams("address");
-        final var phoneNumber = req.queryParams("phoneNumber");
+        final var name = req.queryParams("nome");
+        final var address = req.queryParams("endereco");
+        final var phoneNumber = req.queryParams("telefone");
 
         DbOperations.update(Contact.builder()
             .id(id)

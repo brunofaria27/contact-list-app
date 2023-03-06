@@ -13,19 +13,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "CONTATOS_692225_742238")
+@Table(name = "CONTATO_692225_742238")
 public class Contact {
 
   @Id
   @Column(name = "id")
   private String id;
 
-  @Column(name = "name")
+  @Column(name = "nome")
   private String name;
 
-  @Column(name = "address")
+  @Column(name = "endereco")
   private String address;
 
-  @Column(name = "phonenumber")
+  @Column(name = "telefone")
   private String phoneNumber;
 }

@@ -22,6 +22,9 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 
+import { Contact } from "../../typescript";
+import { ContactRepository } from "../repositories/ContactRepositpry";
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -45,16 +48,43 @@ export const Contacts = () => {
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
 
-  const [contactsT, setContacts] = React.useState<Contact[]>([]);
+  const [contacts, setContacts] = React.useState<Contact[]>([]);
 
-  const contacts = [
-    {
-      id: "1",
-      nome: "teste",
-      endereco: "teste2",
-      telefone: "99999999999",
-    },
-  ];
+  async function adicionarItem(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget);
+
+    const data: Contact = {
+      nome: formData.get("nome") as string,
+      endereco: formData.get("endereco") as string,
+      telefone: formData.get("telefone") as string,
+    };
+
+    console.log(data)
+
+    try {
+      await ContactRepository.addProducts(data)
+
+      handleClose();
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function carregarProdutos() {
+    try {
+      setContacts(await ContactRepository.listContacts());
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  React.useEffect(() => {
+    carregarProdutos();
+  }, []);
+
 
   function excluirProduto() {}
 
@@ -153,7 +183,7 @@ export const Contacts = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             📋 <strong>Cadastrar novo contato</strong>
           </Typography>
-          <form onSubmit={excluirProduto}>
+          <form onSubmit={adicionarItem}>
             <FormControl fullWidth margin="normal">
               <InputLabel htmlFor="nome-contato">Nome do contato</InputLabel>
               <Input id="nome-contato" name="nome" required />
