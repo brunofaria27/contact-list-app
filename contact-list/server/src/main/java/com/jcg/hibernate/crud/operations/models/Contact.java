@@ -1,69 +1,31 @@
 package com.jcg.hibernate.crud.operations.models;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "CONTATOS_692225_742238")
-public class Contact implements Serializable {
+public class Contact {
 
-    private static final long serialVersionUID = 1L;
+  @Id
+  @Column(name = "id")
+  private String id;
 
-    @Id
-    @Column(name = "codigo")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+  @Column(name = "name")
+  private String name;
 
-    @Column(name = "nome")
-    private String Nome;
+  @Column(name = "address")
+  private String address;
 
-    @Column(name = "endereco")
-    private String Endereco;
-
-    @Column(name = "telefone")
-    private String Telefone;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return Nome;
-    }
-
-    public void setNome(String nome) {
-        this.Nome = nome;
-    }
-
-    public String getEndereco() {
-        return Endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.Endereco = endereco;
-    }
-
-    public String getTelefone() {
-        return Telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.Telefone = telefone;
-    }
-
-    @Override
-    public String toString() {
-        return "Contato Details?= Id: " + this.id + ", Nome: " + this.Nome + ", REndereco: " + this.Endereco
-                + ", Telefone: " + this.Telefone;
-    }
+  @Column(name = "phonenumber")
+  private String phoneNumber;
 }

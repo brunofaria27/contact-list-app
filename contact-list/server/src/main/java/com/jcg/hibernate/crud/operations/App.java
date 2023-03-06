@@ -14,7 +14,7 @@ public class App {
 
     final var gson = new Gson();
 
-    port(80);
+    port(4678);
 
     before((req, res) -> {
       res.type("application/json");
