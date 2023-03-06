@@ -45,10 +45,14 @@ export const Contacts = () => {
 
   // Modal editar
   const [open2, setOpen2] = React.useState(false);
-  const handleOpen2 = () => setOpen2(true);
+  const handleOpen2 = (id: string) => {
+    setOpen2(true);
+    setIdChange(id);
+  };
   const handleClose2 = () => setOpen2(false);
 
   const [contacts, setContacts] = React.useState<Contact[]>([]);
+  const [idChange, setIdChange] = React.useState("");
 
   async function adicionarItem(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -61,10 +65,8 @@ export const Contacts = () => {
       telefone: formData.get("telefone") as string,
     };
 
-    console.log(data)
-
     try {
-      await ContactRepository.addProducts(data)
+      await ContactRepository.addContact(data)
 
       handleClose();
 
@@ -85,8 +87,32 @@ export const Contacts = () => {
     carregarProdutos();
   }, []);
 
+  async function excluirProduto(id: string | undefined) {
+    try {
+      await ContactRepository.deleteContact(id)
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-  function excluirProduto() {}
+  async function atualizarContato(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+  
+    const formData = new FormData(event.currentTarget);
+  
+    const data: Contact = {
+      nome: formData.get("nome") as string,
+      endereco: formData.get("endereco") as string,
+      telefone: formData.get("telefone") as string,
+    };
+  
+    try {
+      await ContactRepository.updateContact(idChange, data);
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div
@@ -154,14 +180,14 @@ export const Contacts = () => {
                     <IconButton
                       aria-label="Ações do produto"
                       style={{ color: "#000000" }}
-                      onClick={handleOpen2}
+                      onClick={() => handleOpen2(value.id ? value.id: "")}
                     >
                       <EditIcon />
                     </IconButton>
                     <IconButton
                       aria-label="Ações do produto"
                       style={{ color: "#FF0000" }}
-                      onClick={() => excluirProduto()}
+                      onClick={() => excluirProduto(value.id)}
                     >
                       <DeleteForeverIcon />
                     </IconButton>
@@ -238,7 +264,7 @@ export const Contacts = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             📋 <strong>Editar contato</strong>
           </Typography>
-          <form onSubmit={excluirProduto}>
+          <form onSubmit={atualizarContato}>
             <FormControl fullWidth margin="normal">
               <InputLabel htmlFor="nome-contato">Nome do contato</InputLabel>
               <Input id="nome-contato" name="nome" required />

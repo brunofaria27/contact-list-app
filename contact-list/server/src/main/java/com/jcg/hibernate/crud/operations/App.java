@@ -27,6 +27,7 @@ public class App {
       }, gson::toJson);
 
       post(Utils.CONTACT_PATH, (req, res) -> {
+        System.out.println(req);
         final var id = UUID.randomUUID().toString();
 
         final var name = req.queryParams("nome");
