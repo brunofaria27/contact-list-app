@@ -37,7 +37,6 @@ public class DbOperations {
     final var db = getConnection();
 
     try {
-      // erro aqui, db cai no exception <====
       return db.results(Contact.class);
     } catch (Exception sqlException) {
 
