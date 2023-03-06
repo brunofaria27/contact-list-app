@@ -11,3 +11,13 @@ $ yarn create react-app marcos --template typescript
 ```
 
 ### ✅ **Execução**
+
+- Front-End:
+```bash
+$ yarn start
+```
+
+- Back-End:
+```bash
+$ 
+```
